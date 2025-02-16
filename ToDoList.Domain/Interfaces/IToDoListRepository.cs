@@ -2,13 +2,13 @@
 
 public interface IToDoListRepository
 {
-    Task<Entities.ToDoList?> GetByIdAsync(Entities.ToDoList toDoList, CancellationToken cancellationToken = default);
+    Task<Entities.ToDoList?> GetByIdAsync(string toDoListId, CancellationToken cancellationToken = default);
 
-    Task<ICollection<Entities.ToDoList>> GetAsync(CancellationToken cancellationToken = default);
+    Task<ICollection<Entities.ToDoList>> GetAsync(string currentUserId, int currentPage, int pageSize, CancellationToken cancellationToken = default);
 
     Task CreateAsync(Entities.ToDoList todoList, CancellationToken cancellationToken = default);
 
     Task UpdateAsync(Entities.ToDoList updatedList, CancellationToken cancellationToken = default);
 
-    Task DeleteAsync(CancellationToken cancellationToken = default);
+    Task DeleteByIdAsync(string toDoListId, CancellationToken cancellationToken = default);
 }
