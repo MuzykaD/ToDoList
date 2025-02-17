@@ -8,6 +8,8 @@ public interface IToDoListService
 
     Task<ICollection<ToDoListShortDTO>> GetAsync(ToDoListPaginationDTO paginationDTO, CancellationToken cancellationToken = default);
 
+    Task<ISet<string>> GetRelationsAsync(ToDoListRelationsDTO paginationDTO, CancellationToken cancellationToken = default);
+
     Task<ToDoListDTO> CreateAsync(CreateToDoListDTO createDTO, CancellationToken cancellationToken = default);
 
     Task UpdateAsync(UpdateToDoListDTO updateDTO, CancellationToken cancellationToken = default);

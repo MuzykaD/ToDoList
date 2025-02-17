@@ -25,7 +25,7 @@ public class ToDoListService(IToDoListRepository repository) : IToDoListService
 
         if (toDoList == null)
             throw new NotFoundException("ToDoList entity with provided Id does not exist", deleteDTO.ToDoListId);
-        else if (!toDoList.CanBeModifiedBy(deleteDTO.UserId))
+        else if (!toDoList.CanBeDeletedBy(deleteDTO.UserId))
             throw new BadRequestException("You cannot share this list with anyone as it`s not yours.", deleteDTO);
 
         await _repository.DeleteByIdAsync(deleteDTO.ToDoListId, cancellationToken);
@@ -51,13 +51,25 @@ public class ToDoListService(IToDoListRepository repository) : IToDoListService
         return toDoList.ToToDoListDTO();
     }
 
+    public async Task<ISet<string>> GetRelationsAsync(ToDoListRelationsDTO relationsDTO, CancellationToken cancellationToken = default)
+    {
+        var toDoList = await _repository.GetByIdAsync(relationsDTO.ToDoListId, cancellationToken);
+
+        if (toDoList == null)
+            throw new NotFoundException("ToDoList entity with provided Id does not exist", relationsDTO.ToDoListId);
+        else if (!toDoList.CanBeAccessedBy(relationsDTO.UserId))
+            throw new BadRequestException("You cannot share this list with anyone as it`s not yours.", relationsDTO);
+
+        return toDoList.SharedTo;
+    }
+
     public async Task ShareToUserAsync(ShareToDoListDTO shareDTO, CancellationToken cancellationToken = default)
     {
         var toDoList = await _repository.GetByIdAsync(shareDTO.ToDoListId, cancellationToken);
 
         if (toDoList == null)
             throw new NotFoundException("ToDoList entity with provided Id does not exist", shareDTO.ToDoListId);
-        else if (!toDoList.CanBeModifiedBy(shareDTO.UserId))
+        else if (!toDoList.CanBeAccessedBy(shareDTO.UserId))
             throw new BadRequestException("You cannot share this list with anyone as it`s not yours.", shareDTO);
         else if (!toDoList.SharedTo.Add(shareDTO.SharedUserId))
             throw new BadRequestException($"The user-{shareDTO.SharedUserId} already has access to the to-do list.", shareDTO);
@@ -71,7 +83,7 @@ public class ToDoListService(IToDoListRepository repository) : IToDoListService
 
         if (toDoList == null)
             throw new NotFoundException("ToDoList entity with provided Id does not exist", unshareDTO.ToDoListId);
-        else if (!toDoList.CanBeModifiedBy(unshareDTO.UserId))
+        else if (!toDoList.CanBeAccessedBy(unshareDTO.UserId))
             throw new BadRequestException("You cannot manipulate this list with anyone as it`s not yours.", unshareDTO);
         else if (!toDoList.SharedTo.Remove(unshareDTO.SharedUserId))
             throw new BadRequestException($"The user-{unshareDTO.SharedUserId} already doesn`t have an access to the to-do list.", unshareDTO);
@@ -85,7 +97,7 @@ public class ToDoListService(IToDoListRepository repository) : IToDoListService
 
         if (toDoList == null)
             throw new NotFoundException("ToDoList entity with provided Id does not exist", updateDTO.Id);
-        else if (!toDoList.CanBeModifiedBy(updateDTO.UserId))
+        else if (!toDoList.CanBeAccessedBy(updateDTO.UserId))
             throw new BadRequestException("Something wrong here!", updateDTO);
 
         toDoList.Name = updateDTO.Name;

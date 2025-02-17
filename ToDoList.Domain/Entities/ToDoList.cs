@@ -26,5 +26,7 @@ public class ToDoList
 
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
-    public bool CanBeModifiedBy(string userId) => UserId.Equals(userId);
+    public bool CanBeAccessedBy(string userId) => UserId.Equals(userId) || SharedTo.Contains(userId);
+
+    public bool CanBeDeletedBy(string userId) => UserId.Equals(userId);
 }

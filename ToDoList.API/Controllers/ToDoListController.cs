@@ -18,6 +18,14 @@ public class ToDoListController(IToDoListService service) : ControllerBase
         return Ok(toDoList);
     }
 
+    [HttpPost("relations")]
+    public async Task<IActionResult> GetRelationsAsync([FromBody] ToDoListRelationsDTO relationsDTO)
+    {
+        var relations = await _service.GetRelationsAsync(relationsDTO);
+
+        return Ok(relations);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAsync([FromQuery] ToDoListPaginationDTO paginationDTO)
     {

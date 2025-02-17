@@ -10,12 +10,9 @@ public class ToDoMongoDbContext
 
     public ToDoMongoDbContext(IOptions<ToDoMongoDbOptions> options)
     {
-        var client = new MongoClient(options.Value.ConnectionString);
-
-        _mongoDatabase = client.GetDatabase(options.Value.Name);
+        _mongoDatabase = new MongoClient(options.Value.ConnectionString).GetDatabase(options.Value.Name);
     }
 
-    // TODO: move collection namings to constants somewhere
     public IMongoCollection<Domain.Entities.ToDoList> ToDoLists 
         => _mongoDatabase.GetCollection<Domain.Entities.ToDoList>(nameof(ToDoLists));
 }

@@ -22,7 +22,7 @@ public class ToDoListRepository(ToDoMongoDbContext dbContext) : IToDoListReposit
 
     public async Task<ICollection<Domain.Entities.ToDoList>> GetAsync(string currentUserId, int currentPage, int pageSize, CancellationToken cancellationToken = default)
     {
-        return await Collection.Find(GetPaginationFilter(currentUserId))
+        return await Collection.Find(GetUserAssociationFilter(currentUserId))
                                .Skip(--currentPage * pageSize)
                                .Limit(pageSize)
                                .SortByDescending(td => td.CreatedAt)
@@ -48,10 +48,10 @@ public class ToDoListRepository(ToDoMongoDbContext dbContext) : IToDoListReposit
         return Builders<Domain.Entities.ToDoList>.Filter.Eq(t  => t.Id, id);
     }
 
-    private FilterDefinition<Domain.Entities.ToDoList> GetPaginationFilter(string id)
+    private FilterDefinition<Domain.Entities.ToDoList> GetUserAssociationFilter(string id)
     {
         return Builders<Domain.Entities.ToDoList>.Filter.Or(
-            Builders<Domain.Entities.ToDoList>.Filter.Eq(t => t.UserId, id),
-            Builders<Domain.Entities.ToDoList>.Filter.AnyEq(t => t.SharedTo, id));
+               Builders<Domain.Entities.ToDoList>.Filter.Eq(t => t.UserId, id),
+               Builders<Domain.Entities.ToDoList>.Filter.AnyEq(t => t.SharedTo, id));
     }
 }
