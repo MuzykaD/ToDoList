@@ -3,7 +3,7 @@ using ToDoList.Application.DTO;
 
 namespace ToDoList.Application.Validators;
 
-internal class CreateToDoListValidator : AbstractValidator<CreateToDoListDTO>
+public class CreateToDoListValidator : AbstractValidator<CreateToDoListDTO>
 {
     public CreateToDoListValidator()
     {
@@ -14,6 +14,6 @@ internal class CreateToDoListValidator : AbstractValidator<CreateToDoListDTO>
                                             .MinimumLength(1)
                                             .MaximumLength(255)
                                             .WithMessage("Name is required. Length - [1, 255].");
-                             
+
     }
 }

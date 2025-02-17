@@ -3,7 +3,7 @@ using ToDoList.Application.DTO;
 
 namespace ToDoList.Application.Validators;
 
-internal class UnshareToDoListValidator : AbstractValidator<UnshareToDoListDTO>
+public class UnshareToDoListValidator : AbstractValidator<UnshareToDoListDTO>
 {
     public UnshareToDoListValidator()
     {

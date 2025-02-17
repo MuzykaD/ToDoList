@@ -2,7 +2,7 @@
 
 public class ToDoMongoDbOptions
 {
-    public string ConnectionString { get; }
+    public string ConnectionString { get; init; }
 
-    public string Name { get; }
+    public string Name { get; init; }
 }

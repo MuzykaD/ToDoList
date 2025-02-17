@@ -1,15 +1,15 @@
 ﻿namespace ToDoList.Application.Exceptions;
 
-internal class NotFoundException<TId> : Exception
+public class NotFoundException : Exception
 {
-    public TId ProvidedId { get; }
+    public string ProvidedId { get; }
 
-    public NotFoundException(string message, TId id) : base(message)
+    public NotFoundException(string message, string id) : base(message)
     {
         ProvidedId = id;
     }
 
-    public NotFoundException(TId providedId)
+    public NotFoundException(string providedId)
     {
         ProvidedId = providedId;
     }

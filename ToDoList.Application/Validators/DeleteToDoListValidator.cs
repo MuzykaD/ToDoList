@@ -3,7 +3,7 @@ using ToDoList.Application.DTO;
 
 namespace ToDoList.Application.Validators;
 
-internal class DeleteToDoListValidator : AbstractValidator<DeleteToDoListDTO>
+public class DeleteToDoListValidator : AbstractValidator<DeleteToDoListDTO>
 {
     public DeleteToDoListValidator()
     {

@@ -11,7 +11,7 @@ public class ToDoListController(IToDoListService service) : ControllerBase
     private readonly IToDoListService _service = service;
 
     [HttpGet("{toDoListId}")]
-    public async Task<IActionResult> GetByIdAsync([FromQuery] string toDoListId)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] string toDoListId)
     {
         var toDoList = await _service.GetByIdAsync(toDoListId);
 
@@ -29,9 +29,9 @@ public class ToDoListController(IToDoListService service) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] CreateToDoListDTO createDTO)
     {
-        await _service.CreateAsync(createDTO);
+        var createdToDoList = await _service.CreateAsync(createDTO);
 
-        return NoContent();     
+        return Ok(createdToDoList);     
     }
 
     [HttpPut]
@@ -42,5 +42,27 @@ public class ToDoListController(IToDoListService service) : ControllerBase
         return NoContent();
     }
 
-   
+    [HttpPatch("/share")]
+    public async Task<IActionResult> ShareToUserAsync([FromBody] ShareToDoListDTO shareDTO)
+    {
+        await _service.ShareToUserAsync(shareDTO);
+
+        return NoContent();
+    }
+
+    [HttpPatch("/unshare")]
+    public async Task<IActionResult> UnshareFromUserAsync([FromBody] UnshareToDoListDTO unshareDTO)
+    {
+        await _service.UnshareFromUserAsync(unshareDTO);
+
+        return NoContent();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteAsync([FromBody] DeleteToDoListDTO deleteDTO)
+    {
+        await _service.DeleteAsync(deleteDTO);
+
+        return NoContent();
+    }
 }

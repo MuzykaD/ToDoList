@@ -3,7 +3,7 @@ using ToDoList.Application.DTO;
 
 namespace ToDoList.Application.Validators;
 
-internal class ShareToDoListValidator : AbstractValidator<ShareToDoListDTO>
+public class ShareToDoListValidator : AbstractValidator<ShareToDoListDTO>
 {
     public ShareToDoListValidator()
     {

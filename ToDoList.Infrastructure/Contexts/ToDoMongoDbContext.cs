@@ -17,5 +17,5 @@ public class ToDoMongoDbContext
 
     // TODO: move collection namings to constants somewhere
     public IMongoCollection<Domain.Entities.ToDoList> ToDoLists 
-        => _mongoDatabase.GetCollection<Domain.Entities.ToDoList>("ToDoLists");
+        => _mongoDatabase.GetCollection<Domain.Entities.ToDoList>(nameof(ToDoLists));
 }

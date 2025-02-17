@@ -3,7 +3,7 @@ using ToDoList.Application.DTO;
 
 namespace ToDoList.Application.Validators;
 
-internal class UpdateToDoListValidator : AbstractValidator<UpdateToDoListDTO>
+public class UpdateToDoListValidator : AbstractValidator<UpdateToDoListDTO>
 {
     public UpdateToDoListValidator()
     {
