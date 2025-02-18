@@ -13,6 +13,9 @@ public class UnshareToDoListValidator : AbstractValidator<UnshareToDoListDTO>
         RuleFor(unshareDTO => unshareDTO.SharedUserId).NotEmpty()
                                                       .WithMessage("SharedUserId is required");
 
+        RuleFor(unshareDTO => unshareDTO.SharedUserId).NotEqual(shareDTO => shareDTO.UserId)
+                                                      .WithMessage("SharedUserId can`t be equal to UserId");
+
         RuleFor(unshareDTO => unshareDTO.ToDoListId).NotEmpty()
                                                     .WithMessage("ToDoListId is required");
     }

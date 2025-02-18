@@ -5,7 +5,7 @@ using ToDoList.Application.Interfaces;
 namespace ToDoList.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/to-do-lists")]
 public class ToDoListController(IToDoListService service) : ControllerBase
 {
     private readonly IToDoListService _service = service;

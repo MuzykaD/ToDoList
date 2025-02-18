@@ -11,7 +11,11 @@ public class ShareToDoListValidator : AbstractValidator<ShareToDoListDTO>
                                             .WithMessage("UserId is required"); ;
 
         RuleFor(shareDTO => shareDTO.SharedUserId).NotEmpty()
-                                                  .WithMessage("SharedUserId is required"); ;
+                                                  .NotEqual(shareDTO => shareDTO.UserId)
+                                                  .WithMessage("SharedUserId is required");
+
+        RuleFor(shareDTO => shareDTO.SharedUserId).NotEqual(shareDTO => shareDTO.UserId)
+                                                  .WithMessage("SharedUserId can`t be equal to UserId");
 
         RuleFor(shareDTO => shareDTO.ToDoListId).NotEmpty()
                                                 .WithMessage("ToDoListId is required"); ;

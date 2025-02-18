@@ -4,7 +4,7 @@ using ToDoList.Application.Exceptions;
 
 namespace ToDoList.API.Common;
 
-//Use validators in controllers in order to catch ValidationException from FluentValidation
+//Use validators in order to drop and catch ValidationException from FluentValidation
 
 public class GlobalExceptionHandler : IExceptionHandler
 {
